@@ -10,7 +10,7 @@ public class HrManagementSystemApplication {
 
 		SpringApplication.run(HrManagementSystemApplication.class, args);
 
-		System.out.println("running");
+		System.out.println("running now");
 	}
 
 }
