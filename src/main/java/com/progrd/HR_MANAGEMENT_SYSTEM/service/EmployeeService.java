@@ -41,6 +41,18 @@ public class EmployeeService {
         toUpdate.setDateOfBirth(employee.getDateOfBirth());
         toUpdate.setJoiningDate(employee.getJoiningDate());
 
+        employeeRepository.save(toUpdate);
+        return("employee with id " + id+" has been successfully modified");
+    }
+
+    public String deleteEmployee(long id){
+        if(!employeeRepository.existsById(id)){
+            return ("employee with id " + id +" does not exist");
+        }
+        else {
+            employeeRepository.deleteById(id);
+        }
+        return ("employee with id " + id +" has been successfully deleted");
     }
 
 }

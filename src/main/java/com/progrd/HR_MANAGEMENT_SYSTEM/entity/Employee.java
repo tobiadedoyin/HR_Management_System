@@ -40,6 +40,10 @@ public class Employee {
     @Column(name = "joining_date")
     String joiningDate;
 
+    /*@ManyToOne
+    @JoinColumn(name = "department_id")
+    Department department;*/
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
