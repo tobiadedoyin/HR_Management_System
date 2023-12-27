@@ -1,4 +1,4 @@
-package com.progrd.HR_MANAGEMENT_SYSTEM.model;
+package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
 import com.progrd.HR_MANAGEMENT_SYSTEM.enums.LeaveType;
 import com.progrd.HR_MANAGEMENT_SYSTEM.enums.Status;
