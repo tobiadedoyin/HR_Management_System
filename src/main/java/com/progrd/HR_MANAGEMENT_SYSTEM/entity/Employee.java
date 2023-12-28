@@ -1,5 +1,6 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
