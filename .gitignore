@@ -31,3 +31,11 @@ build/
 
 ### VS Code ###
 .vscode/
+./src/main/resources/application.properties
+
+# IntelliJ-specific files
+.idea/
+
+
+# Spring Boot application properties
+src/main/resources/application.properties
