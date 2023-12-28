@@ -2,14 +2,14 @@ package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Getter
 @NoArgsConstructor
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Table(name = "employee")
 public class Employee {
     @Id
@@ -40,9 +40,9 @@ public class Employee {
     @Column(name = "joining_date")
     String joiningDate;
 
-    /*@ManyToOne
+    @ManyToOne
     @JoinColumn(name = "department_id")
-    Department department;*/
+    Department department;
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -79,6 +79,9 @@ public class Employee {
     public void setJoiningDate(String joiningDate) {
         this.joiningDate = joiningDate;
     }
+    public void setDepartment(Department department){
+        this.department = department;
+    }
 
     public String toString() {
         return "Employee{" +
@@ -92,6 +95,7 @@ public class Employee {
                 "address= " + address + '\n' +
                 "role= " + role + '\n' +
                 "joiningDate= " + joiningDate + '\'' +
+                "department = " + department +
                 '}';
     }
 }
