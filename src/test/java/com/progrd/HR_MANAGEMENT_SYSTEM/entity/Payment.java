@@ -35,11 +35,11 @@ public class Payment {
     private long paymentId;
 
 
-//    @ManyToOne
-//
-//
-//    @JoinColumn(name = "employeeId", nullable = false)
-//    private Employee employeeId;
+    @ManyToOne
+
+
+    @JoinColumn(name = "employeeId", nullable = false)
+    private Employee employeeId;
 
     @NotNull(message = "Amount is required")
     @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
