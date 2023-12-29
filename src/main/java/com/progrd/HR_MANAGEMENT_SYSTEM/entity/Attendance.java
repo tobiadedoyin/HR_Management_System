@@ -1,18 +1,15 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
+import com.progrd.HR_MANAGEMENT_SYSTEM.enums.AttendanceStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity
 @DynamicUpdate
@@ -31,16 +28,18 @@ public class Attendance {
     private LocalDate date;
     private LocalTime signIn;
     private LocalTime signOut;
-    private double HourWorked;
-    private Status status;
+    private double hourWorked;
+    private String attendanceStatus;
 
     public Attendance(Employee employees, LocalDate date, LocalTime signIn, LocalTime signOut,
-                      long hourWorked, Status status) {
+                      long hourWorked, AttendanceStatus attendanceStatus) {
         this.employees = employees;
         this.date = date;
         this.signIn = signIn;
         this.signOut = signOut;
-        HourWorked = hourWorked;
-        this.status = status;
+        this.hourWorked = hourWorked;
+        this.attendanceStatus = attendanceStatus.toString();
     }
+
+
 }

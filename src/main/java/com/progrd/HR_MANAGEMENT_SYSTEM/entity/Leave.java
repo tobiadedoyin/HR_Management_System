@@ -13,8 +13,8 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "leave")
-public class leave {
+@Table(name = "leaves")
+public class Leave {
 
     @Id
     @GeneratedValue
