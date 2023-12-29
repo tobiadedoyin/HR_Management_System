@@ -15,6 +15,8 @@ import java.util.Date;
 @RequiredArgsConstructor
 @Table(name = "leaves")
 public class Leave {
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer leaveId;
 
