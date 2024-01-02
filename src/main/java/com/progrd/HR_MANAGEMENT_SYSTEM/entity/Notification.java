@@ -1,13 +1,11 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Entity(name = "notification")
 public class Notification {
@@ -22,6 +20,13 @@ public class Notification {
     @ManyToOne(targetEntity = Employee.class,fetch = FetchType.EAGER)
             @JoinColumn(name = "employee_id")
     Employee employee;
+
+    public Notification(Employee employee) {
+        this.message = "message";
+        this.timestamp = LocalDateTime.now();
+        this.employee = employee;
+        this.status = "UNREAD";
+    }
 
     public void setMessage(String message) {
         this.message = message;
