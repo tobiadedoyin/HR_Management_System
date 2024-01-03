@@ -34,6 +34,20 @@ public class AttendanceController {
         return attendanceService.getAttendanceByDate(date);
     }
 
+    @GetMapping("/timeFrame/{id}/{sDate}/{eDate}")
+    public ResponseEntity<List<Attendance>> getAttendanceOfEmployeeForDateRange
+            (@PathVariable long id,
+             @PathVariable LocalDate sDate, @PathVariable LocalDate eDate) {
+                return attendanceService.getAttendanceForDateRange(id, sDate, eDate);
+    }
+
+@GetMapping("/range/{sDate}/{eDate}")
+    public ResponseEntity<List<Attendance>> getAttendanceOfForDateRange
+            (@PathVariable LocalDate sDate, @PathVariable LocalDate eDate) {
+                return attendanceService.getAttendanceOfAllEmployeeForDateRange(sDate, eDate);
+    }
+
+
     @PostMapping("/signIn")
     public ResponseEntity<Map<String, String>> signIn(@RequestBody Check employeeId) {
         return attendanceService.signIn(employeeId);

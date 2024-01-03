@@ -69,7 +69,10 @@ public class AttendanceService {
             Attendance attendance = attendanceRepository.findById(id).orElseThrow();
 
             LocalTime signOutTime = LocalTime.now(ZoneId.of("Africa/Lagos"));
-            LocalTime signInTime = attendance.getSignIn();
+            LocalTime resumptionTime = LocalTime.of(8, 0);
+            LocalTime signInTime = attendance
+                    .getSignIn()
+                    .isBefore(resumptionTime) ? resumptionTime : attendance.getSignIn();
             Duration duration = Duration.between(signInTime, signOutTime);
 
             long hours = duration.toHours();
@@ -97,5 +100,12 @@ public class AttendanceService {
                 null, 0, AttendanceStatus.PRESENT);
     }
 
+    public ResponseEntity<List<Attendance>> getAttendanceForDateRange(long id, LocalDate sDate, LocalDate eDate) {
+        Employee employee = employeeRepository.findById(id).orElseThrow();
+        return new ResponseEntity<>(attendanceRepository.findAttendanceByEmployeesAndDateBetween(employee, sDate, eDate), HttpStatus.OK);
+    }
 
+    public ResponseEntity<List<Attendance>> getAttendanceOfAllEmployeeForDateRange(LocalDate sDate, LocalDate eDate) {
+        return new ResponseEntity<>(attendanceRepository.findAttendanceByDateBetween(sDate, eDate), HttpStatus.OK);
+    }
 }

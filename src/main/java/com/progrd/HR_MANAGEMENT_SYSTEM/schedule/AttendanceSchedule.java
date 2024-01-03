@@ -45,7 +45,7 @@ public class AttendanceSchedule {
                         Employee employee = employeeRepository.findById(i).orElseThrow();
 
                         attendanceRepository.save(new Attendance(employee, currentDate,
-                                LocalTime.of(0, 0), LocalTime.of(0, 0), 0,
+                                LocalTime.of(0, 0), LocalTime.now(ZoneId.of("Africa/Lagos")), 0,
                                  AttendanceStatus.ABSENT));
                     }
                 }
