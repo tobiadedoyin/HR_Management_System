@@ -2,6 +2,7 @@ package com.progrd.HR_MANAGEMENT_SYSTEM.repository;
 
 import com.progrd.HR_MANAGEMENT_SYSTEM.dto.AttendanceDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Attendance;
+import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -23,17 +24,10 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
             "FROM Attendance a WHERE a.date=:date")
     List<AttendanceDto> findAttendanceDtoByDate(@Param("date") LocalDate date);
 
-    @Query("SELECT new com.progrd.HR_MANAGEMENT_SYSTEM.dto.PresentEmployeeId(a.employees.id) " +
-            "FROM Attendance a WHERE a.date=:date")
-    List<Long> presentEmployee(@Param("date") LocalDate date);
-
     List<Attendance> findAttendanceByDate(LocalDate date);
 
-
-
-
-
-
-
+    List<Attendance> findAttendanceByEmployeesAndDateBetween(Employee employees,
+                                                             LocalDate date, LocalDate date2);
+    List<Attendance> findAttendanceByDateBetween(LocalDate date, LocalDate date2);
 
 }
