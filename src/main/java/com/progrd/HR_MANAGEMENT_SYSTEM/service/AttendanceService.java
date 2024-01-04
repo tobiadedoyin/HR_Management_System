@@ -1,9 +1,10 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.service;
 
+import com.progrd.HR_MANAGEMENT_SYSTEM.dto.AttendanceDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.dto.Check;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Attendance;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Employee;
-import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Status;
+import com.progrd.HR_MANAGEMENT_SYSTEM.enums.AttendanceStatus;
 import com.progrd.HR_MANAGEMENT_SYSTEM.repository.AttendanceRepository;
 import com.progrd.HR_MANAGEMENT_SYSTEM.repository.EmployeeRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,23 +33,24 @@ public class AttendanceService {
         return new ArrayList<>();
     }
 
-    public Attendance getAttendanceByEmployeeId(long employeeId) {
+    public List<AttendanceDto> getAttendanceByEmployeeId(long employeeId) {
         try {
-            return attendanceRepository.findById(employeeId).orElseThrow();
+            return attendanceRepository.findByEmployeesId(employeeId);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public List<Attendance> getAttendanceByDate(String date) {
+    public List<AttendanceDto> getAttendanceByDate(LocalDate date) {
         try {
-            return attendanceRepository.findAttendanceByDate(LocalDate.parse(date));
+            return attendanceRepository.findAttendanceDtoByDate(date);
         } catch (Exception e) {
             e.printStackTrace();
         }
         return new ArrayList<>();
     }
+
 
     public ResponseEntity<Map<String, String>> signIn(Check employeeId) {
         try {
@@ -67,15 +69,19 @@ public class AttendanceService {
             Attendance attendance = attendanceRepository.findById(id).orElseThrow();
 
             LocalTime signOutTime = LocalTime.now(ZoneId.of("Africa/Lagos"));
-            LocalTime signInTime = attendance.getSignIn();
+            LocalTime resumptionTime = LocalTime.of(8, 0);
+            LocalTime signInTime = attendance
+                    .getSignIn()
+                    .isBefore(resumptionTime) ? resumptionTime : attendance.getSignIn();
             Duration duration = Duration.between(signInTime, signOutTime);
+
             long hours = duration.toHours();
             long minutes = duration.toMinutes() % 60;
             double hourWorked = hours + ((double) minutes / 60);
-            double totalHourWorked = hourWorked > 9.5 ? hourWorked : 9;
+            double totalHourWorked = hourWorked > 9.5 || hourWorked <= 9 ? hourWorked : 9;
 
             attendance.setSignOut(signOutTime);
-            attendance.setHourWorked(totalHourWorked);
+            attendance.setHourWorked(Double.parseDouble(String.format("%.2f", totalHourWorked)));
             attendanceRepository.save(attendance);
 
             return ResponseEntity.ok(Map.of("message", "signed out"));
@@ -87,20 +93,19 @@ public class AttendanceService {
 
     private Attendance employeeSignIn(long employeeId) {
         Employee employee = employeeRepository.findById(employeeId).orElseThrow();
-        LocalDate currentDate = LocalDate.now();
-        LocalTime signInTime = LocalTime.now(ZoneId.of("Africa/Lagos"));
-        long hour = 0;
-        int timeDifference = LocalTime.of(8, 30).compareTo(signInTime);
-        Status status;
 
-        if (timeDifference >= 0) {
-            status = Status.PRESENT;
-        } else {
-            status = Status.LATE;
-        }
-        log.info("Inside status {}", status);
-        return new Attendance(employee, currentDate, signInTime, null, hour, status);
+        return new Attendance(
+                employee, LocalDate.now(),
+                LocalTime.now(ZoneId.of("Africa/Lagos")),
+                null, 0, AttendanceStatus.PRESENT);
     }
 
+    public ResponseEntity<List<Attendance>> getAttendanceForDateRange(long id, LocalDate sDate, LocalDate eDate) {
+        Employee employee = employeeRepository.findById(id).orElseThrow();
+        return new ResponseEntity<>(attendanceRepository.findAttendanceByEmployeesAndDateBetween(employee, sDate, eDate), HttpStatus.OK);
+    }
 
+    public ResponseEntity<List<Attendance>> getAttendanceOfAllEmployeeForDateRange(LocalDate sDate, LocalDate eDate) {
+        return new ResponseEntity<>(attendanceRepository.findAttendanceByDateBetween(sDate, eDate), HttpStatus.OK);
+    }
 }

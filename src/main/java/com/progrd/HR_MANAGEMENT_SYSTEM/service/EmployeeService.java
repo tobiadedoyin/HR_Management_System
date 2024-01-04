@@ -41,6 +41,7 @@ public class EmployeeService {
         employee.setFirstName(employeeDto.getFirstName());
         employee.setDateOfBirth(employeeDto.getDateOfBirth());
         employee.setDepartment(department);
+        employee.setContactNumber(employeeDto.getContactNumber());
         employeeRepository.save(employee);
         return ("employee successfully added\n"+employee);
     }

@@ -41,7 +41,7 @@ public class Employee {
     @Column(name = "joining_date")
     String joiningDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     Department department;
 
