@@ -1,5 +1,6 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.service;
 
+import com.progrd.HR_MANAGEMENT_SYSTEM.dto.AttendanceDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.dto.EmployeeDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.dto.LeaveDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Department;
@@ -31,15 +32,22 @@ public class LeaveService {
         return new ResponseEntity<>(leaveRepository.findById(id).get(), HttpStatus.OK);
     }
 
+    public List<Leave> getLeaveByEmployeeId(Integer employeeId) {
+
+            return leaveRepository.findByEmployeesId(employeeId);
+
+    }
+
     public String addLeave(LeaveDto leaveDto) {
         Leave leave = new Leave();
         Employee employee = employeeService.getEmployeeById(leaveDto.getEmployeeId()).getBody();
         leave.setStartDate(leaveDto.getStartDate());
         leave.setEndDate(leaveDto.getEndDate());
         leave.setLeaveType(leaveDto.getLeaveType());
-        leave.setStatus(Status.PENDING);
+        leave.setStatus(Status.APPROVED);
+        leave.setEmployees(employee);
 
-        leaveRepository.save(leave);
+         leaveRepository.save(leave);
         return "leave successfully requested";
 
 
@@ -52,7 +60,7 @@ public class LeaveService {
         toUpdate.setStartDate(leaveDto.getStartDate());
         toUpdate.setEndDate(leaveDto.getEndDate());
         toUpdate.setLeaveType(leaveDto.getLeaveType());
-        toUpdate.setStatus(Status.APPROVED);
+        toUpdate.setStatus(Status.PENDING);
 
         leaveRepository.save(toUpdate);
         return("employee with leave id " + id+" has been successfully modified\n"+toUpdate);

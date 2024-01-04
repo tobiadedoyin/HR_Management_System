@@ -21,4 +21,7 @@ public class LeaveDto {
     private LeaveType leaveType;
 
     private Long employeeId;
+
+    public void setStatus(Status status) {
+    }
 }
