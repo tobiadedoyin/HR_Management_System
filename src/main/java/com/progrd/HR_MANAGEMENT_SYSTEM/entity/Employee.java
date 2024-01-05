@@ -1,5 +1,6 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
@@ -42,7 +43,7 @@ public class Employee {
     @Column(name = "joining_date")
     String joiningDate;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id")
     Department department;
 

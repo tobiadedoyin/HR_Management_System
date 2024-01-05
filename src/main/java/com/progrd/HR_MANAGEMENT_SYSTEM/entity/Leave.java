@@ -13,21 +13,27 @@ import java.util.Date;
 @Entity
 @AllArgsConstructor
 @RequiredArgsConstructor
-@Table(name = "leave")
-public class leave {
+@Table(name = "leaves")
+public class Leave {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer leaveId;
 
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinColumn(name = "employee_id")
+    private Employee employees;
+
+    @Column(name = "start_date")
     private Date startDate;
 
+    @Column(name = "end_date")
     private Date endDate;
 
+    @Column(name = "leave_type")
     @Enumerated
     private LeaveType leaveType;
 
     @Enumerated
     private Status status;
-
 }

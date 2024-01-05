@@ -33,7 +33,7 @@ public class EmployeeService {
 
     public String addEmployee(EmployeeDto employeeDto){
         Employee employee = new Employee();
-        Department department = departmentService.getDepartmentById(employeeDto.getDepartmentId());
+        Department department = departmentService.getDepartmentById(employeeDto.getDepartmentId()).getBody();
 
         employee.setJoiningDate(employeeDto.getJoiningDate());
         employee.setRole(employeeDto.getRole());
@@ -44,6 +44,7 @@ public class EmployeeService {
         employee.setFirstName(employeeDto.getFirstName());
         employee.setDateOfBirth(employeeDto.getDateOfBirth());
         employee.setDepartment(department);
+        employee.setContactNumber(employeeDto.getContactNumber());
         employeeRepository.save(employee);
 
         notificationService.saveNotification(employee.getId());
@@ -53,7 +54,7 @@ public class EmployeeService {
 
     public String updateEmployee(long  id, EmployeeDto employeeDto){
         Employee toUpdate = employeeRepository.findById(id).get();
-        Department department = departmentService.getDepartmentById(employeeDto.getDepartmentId());
+        Department department = departmentService.getDepartmentById(employeeDto.getDepartmentId()).getBody();
 
         toUpdate.setAddress(employeeDto.getAddress());
         toUpdate.setGender(employeeDto.getGender());
