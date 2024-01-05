@@ -3,6 +3,7 @@ package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 @NoArgsConstructor
@@ -11,14 +12,14 @@ import java.time.LocalDateTime;
 public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String message;
     private LocalDateTime timestamp;
     private String status;
 
     @ManyToOne(targetEntity = Employee.class,fetch = FetchType.EAGER)
-            @JoinColumn(name = "employee_id")
+            @JoinColumn(nullable = false, name = "employee_id")
     Employee employee;
 
     public Notification(Employee employee) {

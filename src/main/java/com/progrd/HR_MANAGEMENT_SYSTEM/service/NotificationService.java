@@ -23,7 +23,7 @@ public class NotificationService {
 
     public Notification saveNotification(long employeeId){
         Employee employee = employeeRepository.findById(employeeId).orElseThrow();
-        Notification newNotification = new Notification();
+        Notification newNotification = new Notification(employee);
         newNotification.setEmployee(employee);
         newNotification.setMessage("employee "+employee.getFirstName().concat(" "+employee.getLastName())+
                 "\nhas been added to the organisation");

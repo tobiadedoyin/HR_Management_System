@@ -5,8 +5,10 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -83,7 +85,7 @@ public class Employee {
         this.department = department;
     }
 
-    public String toString() {
+    /*public String toString() {
         return "Employee{" +
                 "id= " + id +
                 "firstName= " + firstName + '\n' +
@@ -97,5 +99,5 @@ public class Employee {
                 "joiningDate= " + joiningDate + '\'' +
                 "department = " + department +
                 '}';
-    }
+    }*/
 }
