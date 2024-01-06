@@ -13,6 +13,7 @@ public class MailService {
     public static final String PENDING_LEAVE_REQUEST = "Pending Leave Request";
     public static final String LEAVE_APPROVED = "Leave Approved";
     public static final String LEAVE_REQUEST_DECLINED = "Leave Request Declined";
+    public static final String  HR_EMAIL_ADDRESS = "hr1@humanresurce.com";
 
     private final JavaMailSender javaMailSender;
     private final MailMessageUtil mailMessageUtil;
@@ -21,17 +22,31 @@ public class MailService {
     @Value("${EMAIL-ADDRESS}")
     private String fromEmail;
 
-    public void sendPendingMessage(String name, String to, int Lid){
+    public void sendPendingMessageForReview(String name, int Lid){
        try {
            SimpleMailMessage mailMessage = new SimpleMailMessage();
-           mailMessage.setTo(to);
+           mailMessage.setTo(HR_EMAIL_ADDRESS);
            mailMessage.setSubject(PENDING_LEAVE_REQUEST);
            mailMessage.setFrom(fromEmail);
-           mailMessage.setText(mailMessageUtil.getPendingMessage(name, host, Lid));
+           mailMessage.setText(mailMessageUtil.getPendingMessageForReview(name, host, Lid));
            javaMailSender.send(mailMessage);
        }catch (Exception e){
            throw new RuntimeException("something went wrong");
        }
+
+    }
+
+    public void sendPendingMessage(String name, String to, int Lid){
+        try {
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(to);
+            mailMessage.setSubject(PENDING_LEAVE_REQUEST);
+            mailMessage.setFrom(fromEmail);
+            mailMessage.setText(mailMessageUtil.getPendingMessage(name, Lid));
+            javaMailSender.send(mailMessage);
+        }catch (Exception e){
+            throw new RuntimeException("something went wrong");
+        }
 
     }
 
