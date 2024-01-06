@@ -17,7 +17,6 @@ public class LeaveDto {
 
     private Date endDate;
 
-
     private LeaveType leaveType;
 
     private Long employeeId;

@@ -86,9 +86,9 @@ public class Employee {
         this.department = department;
     }
 
-    /*public String toString() {
-        return "Employee{" +
-                "id= " + id +
+    public String toString() {
+        return "Employee{\n" +
+                "id= " + id +"\n"+
                 "firstName= " + firstName + '\n' +
                 "lastName= " + lastName + '\n' +
                 "dateOfBirth= " + dateOfBirth + '\n' +
@@ -97,8 +97,8 @@ public class Employee {
                 "email= " + email + '\n' +
                 "address= " + address + '\n' +
                 "role= " + role + '\n' +
-                "joiningDate= " + joiningDate + '\'' +
-                "department = " + department +
+                "joiningDate= " + joiningDate + '\n' +
+                "department = " + department +"\n"+
                 '}';
-    }*/
+    }
 }
