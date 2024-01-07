@@ -28,14 +28,13 @@ public class LeaveService {
 
 
 
-    public ResponseEntity<Leave> getLeaveById(Integer id){
+    public ResponseEntity<Leave> getLeaveById(Integer id) {
         return new ResponseEntity<>(leaveRepository.findById(id).get(), HttpStatus.OK);
     }
 
     public List<Leave> getLeaveByEmployeeId(Integer employeeId) {
 
             return leaveRepository.findByEmployeesId(employeeId);
-
     }
 
     public String addLeave(LeaveDto leaveDto) {
@@ -44,30 +43,28 @@ public class LeaveService {
         leave.setStartDate(leaveDto.getStartDate());
         leave.setEndDate(leaveDto.getEndDate());
         leave.setLeaveType(leaveDto.getLeaveType());
-        leave.setStatus(Status.APPROVED);
+        leave.setStatus(Status.PENDING);
         leave.setEmployees(employee);
 
          leaveRepository.save(leave);
         return "leave successfully requested";
-
-
     }
 
-    public String updateLeave(Integer  id, LeaveDto leaveDto){
+    public String updateLeave(Integer  id, LeaveDto leaveDto) {
         Leave toUpdate = leaveRepository.findById(id).get();
         Employee employee = employeeService.getEmployeeById(leaveDto.getEmployeeId()).getBody();
 
         toUpdate.setStartDate(leaveDto.getStartDate());
         toUpdate.setEndDate(leaveDto.getEndDate());
         toUpdate.setLeaveType(leaveDto.getLeaveType());
-        toUpdate.setStatus(Status.PENDING);
+        toUpdate.setStatus(Status.APPROVED);
 
         leaveRepository.save(toUpdate);
         return("employee with leave id " + id+" has been successfully modified\n"+toUpdate);
     }
 
 
-    public  String deleteLeave(Integer id){
+    public  String deleteLeave(Integer id) {
         leaveRepository.deleteById(id);
         return ("employee with id " + id +" has been successfully deleted");
     }
