@@ -18,27 +18,27 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/api/employees")
+    @GetMapping("/employee")
     public List<Employee> getAllEmployee(){
     return employeeService.getAllEmployee();
     }
 
-    @GetMapping("/api/employees/{employeeID}")
-    public ResponseEntity<Employee> getById(@RequestParam long id){
-    return employeeService.getEmployeeById(id);
+    @GetMapping("/employee/{employeeID}")
+    public ResponseEntity<Employee> getById(@PathVariable long employeeID){
+    return employeeService.getEmployeeById(employeeID);
     }
 
-    @PostMapping("/api/employees")
+    @PostMapping("/employee")
     public String createEmployee(@RequestBody EmployeeDto employeeDto){
     return employeeService.addEmployee(employeeDto);
     }
 
-    @PutMapping("/api/employees/{employeeID}")
-    public String updateEmployee(@RequestParam long id, @RequestBody EmployeeDto employeeDto){
-    return employeeService.updateEmployee(id, employeeDto);
+    @PutMapping("/employee/{employeeID}")
+    public String updateEmployee(@PathVariable long employeeID, @RequestBody EmployeeDto employeeDto){
+    return employeeService.updateEmployee(employeeID, employeeDto);
     }
 
-    @DeleteMapping("/api/employees/{employeeID}")
+    @DeleteMapping("/employee/{employeeID}")
     public String deleteEmployee(@RequestParam long id){
     return employeeService.deleteEmployee(id);
     }
