@@ -28,7 +28,9 @@ public class Attendance {
     private LocalDate date;
     private LocalTime signIn;
     private LocalTime signOut;
+
     private double hourWorked;
+
     private String attendanceStatus;
 
     public Attendance(Employee employees, LocalDate date, LocalTime signIn, LocalTime signOut,
