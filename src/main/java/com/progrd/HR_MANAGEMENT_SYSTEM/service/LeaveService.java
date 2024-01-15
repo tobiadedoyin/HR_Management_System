@@ -1,5 +1,8 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.service;
 
+
+import com.progrd.HR_MANAGEMENT_SYSTEM.dto.AttendanceDto;
+import com.progrd.HR_MANAGEMENT_SYSTEM.dto.EmployeeDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.dto.LeaveDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Employee;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Leave;
@@ -26,8 +29,13 @@ public class LeaveService {
     private final NotificationService notificationService;
 
 
-    public ResponseEntity<Leave> getLeaveById(Integer id){
+    public ResponseEntity<Leave> getLeaveById(Integer id) {
         return new ResponseEntity<>(leaveRepository.findById(id).get(), HttpStatus.OK);
+    }
+
+    public List<Leave> getLeaveByEmployeeId(Integer employeeId) {
+
+            return leaveRepository.findByEmployeesId(employeeId);
     }
 
     public String addLeave(LeaveDto leaveDto) {
@@ -37,6 +45,11 @@ public class LeaveService {
         leave.setEndDate(leaveDto.getEndDate());
         leave.setLeaveType(leaveDto.getLeaveType());
         leave.setStatus(Status.PENDING);
+
+        leave.setEmployees(employee);
+
+         leaveRepository.save(leave);
+
         //alex added the employee entity
         leave.setEmployees(employee);
 
@@ -52,13 +65,10 @@ public class LeaveService {
         //save notification
         notificationService.savePendingLeaveNotification(employee.getId());
 
-
         return "leave successfully requested";
-
-
     }
 
-    public String updateLeave(Integer  id, LeaveDto leaveDto){
+    public String updateLeave(Integer  id, LeaveDto leaveDto) {
         Leave toUpdate = leaveRepository.findById(id).get();
         Employee employee = employeeService.getEmployeeById(leaveDto.getEmployeeId()).getBody();
 
@@ -80,10 +90,12 @@ public class LeaveService {
     }
 
 
+
     public  String deleteLeave(Integer id){
         //to get employee details
         Leave toDecline = leaveRepository.findById(id).orElseThrow(null);
         Employee employee = toDecline.getEmployees();
+
         leaveRepository.deleteById(id);
 
         //send leave decline message to employee

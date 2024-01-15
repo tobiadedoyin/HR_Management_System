@@ -36,6 +36,7 @@ public class AttendanceService {
     public List<AttendanceDto> getAttendanceByEmployeeId(long employeeId) {
         try {
             return attendanceRepository.findByEmployeesId(employeeId);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

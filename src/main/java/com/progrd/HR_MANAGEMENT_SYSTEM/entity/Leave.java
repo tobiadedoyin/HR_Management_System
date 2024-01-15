@@ -31,9 +31,9 @@ public class Leave {
     private Date endDate;
 
     @Column(name = "leave_type")
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private LeaveType leaveType;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Status status;
 }
