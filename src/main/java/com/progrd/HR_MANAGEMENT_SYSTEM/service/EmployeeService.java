@@ -4,6 +4,7 @@ import com.progrd.HR_MANAGEMENT_SYSTEM.dto.EmployeeDto;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Department;
 import com.progrd.HR_MANAGEMENT_SYSTEM.entity.Employee;
 import com.progrd.HR_MANAGEMENT_SYSTEM.repository.EmployeeRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,13 +13,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class EmployeeService {
 
-    @Autowired
-    private EmployeeRepository employeeRepository;
 
-    @Autowired
-    private DepartmentService departmentService;
+    private final EmployeeRepository employeeRepository;
+
+    private final DepartmentService departmentService;
+
+    private final NotificationService notificationService;
 
     public List<Employee> getAllEmployee(){
         return employeeRepository.findAll();
@@ -43,6 +46,9 @@ public class EmployeeService {
         employee.setDepartment(department);
         employee.setContactNumber(employeeDto.getContactNumber());
         employeeRepository.save(employee);
+
+        notificationService.saveNotification(employee.getId());
+
         return ("employee successfully added\n"+employee);
     }
 
