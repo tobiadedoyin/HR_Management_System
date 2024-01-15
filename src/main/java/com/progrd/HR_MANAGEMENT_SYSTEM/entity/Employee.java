@@ -6,8 +6,10 @@ import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Entity
+@SuperBuilder
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -85,8 +87,8 @@ public class Employee {
     }
 
     public String toString() {
-        return "Employee{" +
-                "id= " + id +
+        return "Employee{\n" +
+                "id= " + id +"\n"+
                 "firstName= " + firstName + '\n' +
                 "lastName= " + lastName + '\n' +
                 "dateOfBirth= " + dateOfBirth + '\n' +
@@ -95,8 +97,8 @@ public class Employee {
                 "email= " + email + '\n' +
                 "address= " + address + '\n' +
                 "role= " + role + '\n' +
-                "joiningDate= " + joiningDate + '\'' +
-                "department = " + department +
+                "joiningDate= " + joiningDate + '\n' +
+                "department = " + department +"\n"+
                 '}';
     }
 }
