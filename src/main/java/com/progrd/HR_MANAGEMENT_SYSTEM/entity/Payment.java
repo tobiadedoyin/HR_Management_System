@@ -1,5 +1,8 @@
 package com.progrd.HR_MANAGEMENT_SYSTEM.entity;
 
+
+import com.progrd.HR_MANAGEMENT_SYSTEM.enums.PaymentMethod;
+import com.progrd.HR_MANAGEMENT_SYSTEM.enums.PaymentStatus;
 import com.progrd.HR_MANAGEMENT_SYSTEM.enums.PaymentType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
@@ -9,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 // Payment:
@@ -27,31 +32,19 @@ import java.util.Date;
 @Table(schema = "payment")
 public class Payment {
     @Id
-
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-
-    private long paymentId;
-
-
-//    @ManyToOne
-//
-//
-//    @JoinColumn(name = "employeeId", nullable = false)
-//    private Employee employeeId;
-
-    @NotNull(message = "Amount is required")
-    @DecimalMin(value = "0.01", message = "Amount must be greater than 0")
-    private Double amount;
-
-    @NotNull(message = "Payment date is required")
-    @Temporal(TemporalType.DATE)
-    private Date paymentDate;
-
+    private Long paymentId;
+    @ManyToOne
+    private Employee employee;
+    private BigDecimal amount;
+    private LocalDate paymentDate;
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private PaymentType paymentType;
+    @Enumerated(EnumType.STRING)
+    private PaymentStatus paymentStatus;
+    @Enumerated(EnumType.STRING)
+    private PaymentMethod paymentMethod;
+    private String payPalTransactionId;
 
 
 

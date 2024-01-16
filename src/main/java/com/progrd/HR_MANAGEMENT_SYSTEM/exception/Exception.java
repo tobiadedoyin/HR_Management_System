@@ -2,7 +2,7 @@ package com.progrd.HR_MANAGEMENT_SYSTEM.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class Exception {
+public class Exception extends Throwable {
     private final String message;
 
     private final Throwable throwable;
@@ -27,4 +27,3 @@ public class Exception {
         return httpStatus;
     }
 }
-
