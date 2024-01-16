@@ -21,14 +21,48 @@ public class NotificationService {
         return ntfrpy.findNotificationByEmployee_Id(employeeId);
     }
 
-    public Notification saveNotification(long employeeId){
+    public void saveNotification(long employeeId){
         Employee employee = employeeRepository.findById(employeeId).orElseThrow();
-        Notification newNotification = new Notification();
+        Notification newNotification = new Notification(employee);
         newNotification.setEmployee(employee);
+
         newNotification.setMessage("employee "+employee.getFirstName().concat(" "+employee.getLastName())+
                 "\nhas been added to the organisation");
-        return ntfrpy.save(newNotification);
+        ntfrpy.save(newNotification);
     }
+
+    public void savePendingLeaveNotification(long employeeId){
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow();
+        Notification newNotification = new Notification(employee);
+        newNotification.setEmployee(employee);
+
+        newNotification.setMessage("employee "+employee.getFirstName().concat(" "+employee.getLastName())+
+                "\nhas a pending leave request");
+        ntfrpy.save(newNotification);
+    }
+
+    public void saveApprovedLeaveNotification(long employeeId){
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow();
+        Notification newNotification = new Notification(employee);
+        newNotification.setEmployee(employee);
+
+        newNotification.setMessage("employee "+employee.getFirstName().concat(" "+employee.getLastName())+
+                "\nleave has been approved");
+        ntfrpy.save(newNotification);
+    }
+
+    public void saveDeclineLeaveNotification(long employeeId){
+        Employee employee = employeeRepository.findById(employeeId).orElseThrow();
+        Notification newNotification = new Notification(employee);
+        newNotification.setEmployee(employee);
+
+        newNotification.setMessage("employee "+employee.getFirstName().concat(" "+employee.getLastName())+
+                "\nleave application has been declined");
+        ntfrpy.save(newNotification);
+    }
+
+
+
 
     public Notification findById(int notificationId){
         return ntfrpy.findById(notificationId).orElseThrow();

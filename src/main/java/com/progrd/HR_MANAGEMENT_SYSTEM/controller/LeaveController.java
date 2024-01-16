@@ -7,29 +7,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
+@RequestMapping("Leave")
 public class LeaveController {
 
     @Autowired
     private LeaveService leaveService;
 
-    @GetMapping("/api/leave")
-    public ResponseEntity<Leave> getLeaveById(Integer id){
+    @GetMapping("/{id}")
+    public ResponseEntity<Leave> getLeaveById(@PathVariable Integer id){
         return leaveService.getLeaveById(id);
     }
 
-    @PostMapping("/api/leave")
+    @GetMapping("/employeeId/{id}")
+    public List<Leave> getLeaveByEmployeeId(@PathVariable Integer id) {
+
+        return leaveService.getLeaveByEmployeeId(id);
+    }
+
+    @PostMapping("/addLeave")
     public String addLeave(@RequestBody LeaveDto leaveDto){
         return leaveService.addLeave(leaveDto);
     }
 
-    @PutMapping(" /api/leave/{leaveID}")
-    public String updateLeave( @PathVariable Integer  id, @RequestBody LeaveDto leaveDto){
+    @PutMapping("/updateLeave/{leaveId}")
+    public String updateLeave(@PathVariable("leaveId") Integer  id, @RequestBody LeaveDto leaveDto) {
         return leaveService.updateLeave(id,leaveDto);
     }
 
-    @DeleteMapping(" /api/leave/{leaveID}")
-    public  String deleteLeave(@PathVariable Integer id){
+    @DeleteMapping("/deleteLeave/{leaveId}")
+    public  String deleteLeave(@PathVariable("leaveId") Integer id) {
         return leaveService.deleteLeave(id);
     }
 }
