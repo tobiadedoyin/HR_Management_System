@@ -69,23 +69,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-core</artifactId>
+			<version>10.1.16</version>
+		</dependency>
+		<dependency>
+			<groupId>com.progrd</groupId>
+			<artifactId>HR_MANAGEMENT_SYSTEM</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
-        <dependency>
-            <groupId>org.apache.tomcat.embed</groupId>
-            <artifactId>tomcat-embed-core</artifactId>
-            <version>10.1.16</version>
-        </dependency>
-        <dependency>
-            <groupId>com.progrd</groupId>
-            <artifactId>HR_MANAGEMENT_SYSTEM</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 
-	
-
-
-	<build>
+ 	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
