@@ -38,7 +38,8 @@ public class Employee {
 
     String address;
 
-    String role;
+    @OneToOne(fetch = FetchType.EAGER)
+    Role role;
 
     @Column(name = "joining_date")
     String joiningDate;
@@ -75,9 +76,13 @@ public class Employee {
         this.address = address;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
+
+    /*public void setRole(String role) {
+        this.role = role;
+    }*/
 
     public void setJoiningDate(String joiningDate) {
         this.joiningDate = joiningDate;
