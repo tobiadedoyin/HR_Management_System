@@ -12,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeService {
@@ -81,4 +83,7 @@ public class EmployeeService {
         return ("employee with id " + id + " has been successfully deleted");
     }
 
+    public List<Employee> getAllEmployee() {
+        return employeeRepository.findAll();
+    }
 }
